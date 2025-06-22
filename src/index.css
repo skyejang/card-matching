@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
+@theme {
+  --color-darkbrown: #3b3024;
+  --color-brown: #d9b88c;
+  --color-yellow: #ffe9a6;
+  --color-orange: #e75a3c;
+  --color-pink: #ffd5dc;
+  --color-green: #9ae8e5;
+  --color-ivory: #fffcf7;
+  --color-gray: #bdbdbd;
+  --font-roboto: "Roboto", sans-serif;
+  --font-bungee: "Bungee Inline", sans-serif;
+}
+.text-shadow {
+  text-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+}
+.text-shadow:active {
+  text-shadow: none;
+}
+.card-wrap {
+  @apply w-[100px] h-[100px] relative;
+  transition: all 0.5s;
+  perspective-origin: center;
+  transform-style: preserve-3d;
+}
+.card-wrap:active,
+.card-wrap.flip {
+  transform: rotateY(180deg);
+}
+.card {
+  @apply w-full h-full border-2 border-darkbrown rounded-md flex items-center justify-center;
+}
+.card.front {
+  @apply bg-brown;
+  position: absolute;
+  backface-visibility: hidden;
+  z-index: 2;
+}
+.card.back {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
