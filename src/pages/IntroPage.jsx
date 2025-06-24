@@ -1,5 +1,5 @@
 import React from "react";
-const Intropage = () => {
+const Intropage = ({ onStart }) => {
   return (
     <div className="pt-12">
       <div className="w-sm mx-auto relative h-36">
@@ -11,7 +11,10 @@ const Intropage = () => {
         </h1>
       </div>
       <div className="w-full text-center">
-        <button className="font-bungee text-shadow text-orange text-5xl cursor-pointer mt-32">
+        <button
+          onClick={onStart}
+          className="font-bungee text-shadow text-orange text-5xl cursor-pointer mt-32"
+        >
           START
         </button>
       </div>

@@ -5,9 +5,16 @@ const Card = ({ cardSet, card, onClick, isFlipped }) => {
   };
   const emojiMap = {
     clover: "🍀",
+    bamboo: "🎋",
+    leaves: "🌿",
+    palm: "🌴",
     flower: "🌼",
     sunflower: "🌻",
+    bouquet: "💐",
     cherryblossom: "🌸",
+    hibiscus: "🌺",
+    tulip: "🌷",
+    rose: "🌹",
   };
   const colorMap = {
     //tailwind css에서 동적클래스 인식 안됨
