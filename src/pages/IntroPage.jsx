@@ -1,4 +1,5 @@
 import React from "react";
+import DemoPlay from "../components/DemoPlay";
 const Intropage = ({ onStart }) => {
   return (
     <div className="pt-12">
@@ -19,7 +20,7 @@ const Intropage = ({ onStart }) => {
         </button>
       </div>
       {/* demo card wrap */}
-      <div className="w-[424px] h-[208px] bg-amber-400 fixed bottom-0 left-1/2 -translate-x-1/2"></div>
+      <DemoPlay />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DemoPlay from "../components/DemoPlay";
 const LevelPage = ({ onSubmit }) => {
   const [level, setLevel] = useState("easy");
   const [name, setName] = useState("");
@@ -86,7 +87,7 @@ const LevelPage = ({ onSubmit }) => {
       </form>
 
       {/* demo card wrap */}
-      <div className="w-[424px] h-[208px] bg-amber-400 fixed bottom-0 left-1/2 -translate-x-1/2"></div>
+      <DemoPlay />
     </div>
   );
 };
