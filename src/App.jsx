@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className="bg-ivory w-full h-screen">
-      <div className="w-3xl h-full m-auto">
+      <div className="max-[431px]:w-full w-md md:w-3xl h-screen m-auto">
         {page === "intro" && <Intropage onStart={() => setPage("level")} />}
         {page === "level" && (
           <LevelPage

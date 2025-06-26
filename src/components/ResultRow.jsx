@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const ResultRow = ({ rank, name, time, highlight }) => {
   return (
     <motion.div
-      layout // ⭐ 위치 이동 애니메이션
+      layout // animation for location moving
       {...(highlight && {
         initial: { y: 50, opacity: 0 },
         animate: { y: 0, opacity: 1 },

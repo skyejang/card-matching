@@ -2,15 +2,20 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import Card from "../components/Card";
 
 const GamePage = ({ level, onClick, onComplete }) => {
+  //Pre-specified : dynamic class creation is not possible in tailwind
   const colClass =
-    level === 6 ? "grid-cols-3" : level === 8 ? "grid-cols-4" : "grid-cols-5";
+    level === 6
+      ? "min-[540px]:grid-cols-3"
+      : level === 8
+      ? "min-[540px]:grid-cols-4"
+      : "min-[540px]:grid-cols-5";
   const cardSet = {
     yellow: ["sunflower", "flower", "bouquet"],
     pink: ["cherryblossom", "hibiscus", "tulip", "rose"],
     green: ["clover", "bamboo", "leaves", "palm"],
   };
 
-  //카드뽑기 & 중복 쌍 만들기
+  //Draw a Card & Make a Pair
   const color = Object.keys(cardSet);
   const PickCards = useMemo(() => {
     const rand = (max) => Math.floor(Math.random() * max);
@@ -27,15 +32,15 @@ const GamePage = ({ level, onClick, onComplete }) => {
     const remain_loop = level % color.length;
     const picked = [];
 
-    //반복문 도는 횟수 :  총쌍/색 갯수의 몫
+    //Number of repetitions: total pairs/colours
     const RandomLoop = (bg) => {
       for (var i = 0; i < loop_num; i++) {
-        //랜덤숫자 : 배열의 인덱스값을 랜덤으로 넣기위해서
-        //랜덤숫자가 각 색깔별로 달라도 상관없음
-        //각 색깔 배열의 랜덤숫자 인덱스에 해당하는값을 push로 밀어주고 copy에서는 빼기
-        //뺀 배열에서 계속 돌아가기
-        //랜덤숫자의 max값도 copy배열 조정 이후 다시정해서 getInter함수에넣기
-        //반복문돌렸을 때 copy배열 length가 0일 때 끝
+        //Random num: to randomly place the index value of the array
+        //doesn't matter if the random number is different for each color
+        //push the value corresponding to the random index of each color array and subtract it from copy arr
+        //Continuous Return from the subtract Array
+        //re-select max value of random digits after adjusting the copy arrangement, put into the rand function
+        //End when the copy array length is 0 when the repeat statement is turned
         const arr = copy_cardSet[bg];
         const card = arr[rand(arr.length)];
         if (arr.length !== 0) {
@@ -61,7 +66,7 @@ const GamePage = ({ level, onClick, onComplete }) => {
         }
       }
     }
-    //최종 셔플
+    //final shuffle
     return picked.sort(() => Math.random() - 0.5);
   }, [level]);
 
@@ -70,25 +75,26 @@ const GamePage = ({ level, onClick, onComplete }) => {
   const [firstIdx, setFirstIdx] = useState(null);
   const [isPaired, setIsPaired] = useState(0);
   const flipHandler = (index) => {
-    //이미 뒤집어져있거나 짝맞춰진경우 무시
+    //Ignore if it's already flipped or paired
     if (flipped[index] || paired[index]) return;
-    //useState상태변화 할 때, 최신의 이전값을 가져올때 이전값을 prev인자로 받아옴
+    //When changing the useState state,
+    //get the previous value as a prev factor when getting the latest prev
     setFlipped((prev) => {
       const copy_prev = [...prev];
       copy_prev[index] = true;
       return copy_prev;
     });
-    //첫번째 선택 카드일때
+    //the first choice card
     if (firstIdx === null) {
       setFirstIdx(index);
       return;
     }
-    //두번째 선택 카드일 때
-    const first = firstIdx; //스냅샷
+    //the second choice card
+    const first = firstIdx; //snapshot
     const second = index;
-    setFirstIdx(null); //다음 턴 대비 초기화
+    setFirstIdx(null); //Initialize for next turn
     if (PickCards[first] === PickCards[second]) {
-      // 매칭성공했을 떄
+      // matching success
       setIsPaired((prev) => prev + 1);
       setPaired((prev) => {
         const copy_prev = [...prev];
@@ -112,7 +118,7 @@ const GamePage = ({ level, onClick, onComplete }) => {
   const [elapsed, setElapsed] = useState(0);
   const startTimeRef = useRef(null);
   const frameRef = useRef(null);
-  //타이머 시작
+  //timer start
   useEffect(() => {
     if (level === isPaired) {
       cancelAnimationFrame(frameRef.current);
@@ -121,9 +127,9 @@ const GamePage = ({ level, onClick, onComplete }) => {
       }, 200);
       return;
     }
-    startTimeRef.current = performance.now(); // 시작시각 ms
+    startTimeRef.current = performance.now(); // start time(ms)
     const update = () => {
-      const now = performance.now(); //현재 시각
+      const now = performance.now(); //current time
       setElapsed(((now - startTimeRef.current) / 1000).toFixed(2));
       frameRef.current = requestAnimationFrame(update);
     };
@@ -133,15 +139,15 @@ const GamePage = ({ level, onClick, onComplete }) => {
   return (
     <>
       {level === isPaired && (
-        <div className="w-full h-screen bg-white/50 fixed left-0 top-0 z-10 flex items-center justify-center">
-          <h1 className="font-bungee text-darkbrown text-7xl text-shadow">
+        <div className="w-full h-screen bg-white/50 fixed left-0 top-0 z-10 flex items-center justify-center px-4">
+          <h1 className="font-bungee text-darkbrown max-[400px]:text-4xl max-[600px]:text-5xl text-7xl text-shadow">
             ALL MATCHED!
           </h1>
         </div>
       )}
       <div className="pt-4">
         {/* demo card wrap */}
-        <div className="w-full flex justify-between mt-12">
+        <div className="w-full flex justify-between mt-12 max-[501px]:mt-6">
           <div className="flex">
             <p className="text-lg text-darkbrown font-roboto font-medium mr-4">
               Matched Pairs
@@ -159,8 +165,10 @@ const GamePage = ({ level, onClick, onComplete }) => {
             </p>
           </div>
         </div>
-        <div className="w-full h-12"></div>
-        <div className={`w-fit grid gap-2 m-auto ${colClass}`}>
+        <div className="w-full h-12 max-[501px]:h-8"></div>
+        <div
+          className={`w-fit grid gap-2 m-auto max-[541px]:grid-cols-4 ${colClass}`}
+        >
           {PickCards.map((card, i) => (
             <Card
               key={i}
@@ -171,10 +179,10 @@ const GamePage = ({ level, onClick, onComplete }) => {
             />
           ))}
         </div>
-        <div className="w-full text-center mt-16">
+        <div className="w-full text-center mt-16 max-[501px]:mt-8">
           <button
             onClick={onClick}
-            className="font-bungee text-shadow text-orange text-5xl cursor-pointer"
+            className="font-bungee text-shadow text-orange max-[501px]:text-4xl text-5xl cursor-pointer"
           >
             BACK
           </button>
