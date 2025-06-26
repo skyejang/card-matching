@@ -20,7 +20,7 @@ const ResultPage = ({ playerName, playerTime, onBackToStart }) => {
     alert("All Clear!");
   };
   return (
-    <div className="pt-4 max-[431px]:pt-8">
+    <div className="pt-4 max-[431px]:pt-8 max-[431px]:px-4">
       <div className="max-[431px]:w-xs w-sm mx-auto relative max-[431px]:h-24 h-30">
         <h1 className="font-bungee text-shadow text-darkbrown max-[431px]:text-5xl text-6xl absolute">
           HANPAN
@@ -29,7 +29,7 @@ const ResultPage = ({ playerName, playerTime, onBackToStart }) => {
           MATCH
         </h1>
       </div>
-      <div className="w-sm mt-12 mx-auto">
+      <div className="max-[431px]:w-full w-sm mt-12 mx-auto">
         <div className="w-full h-fit bg-white rounded-lg border-2 border-darkbrown p-4">
           {/* title */}
           <div className="w-full flex">

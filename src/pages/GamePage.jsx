@@ -145,10 +145,9 @@ const GamePage = ({ level, onClick, onComplete }) => {
           </h1>
         </div>
       )}
-      <div className="pt-4">
-        {/* demo card wrap */}
+      <div className="pt-4 ">
         <div className="w-full flex justify-between mt-12 max-[501px]:mt-6">
-          <div className="flex">
+          <div className="flex max-[500px]:px-6">
             <p className="text-lg text-darkbrown font-roboto font-medium mr-4">
               Matched Pairs
             </p>
