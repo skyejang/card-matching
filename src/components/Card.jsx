@@ -25,7 +25,10 @@ const Card = ({ cardSet, card, onClick, isFlipped, popping }) => {
   const emoji = (card) => emojiMap[card] || "";
   return (
     <div className={`card-group ${popping ? "pop" : ""}`}>
-      <div className={`card-wrap ${isFlipped ? "flip" : ""}`} onClick={onClick}>
+      <div
+        className={`card-wrap ${isFlipped ? "flip" : ""}`}
+        onPointerDown={onClick}
+      >
         <div className="card front"></div>
         <div className={`card back ${colorMap[findColor(cardSet, card)]}`}>
           <p className="text-4xl">{emoji(card)}</p>

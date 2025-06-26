@@ -114,19 +114,18 @@ const GamePage = ({ level, onClick, onComplete }) => {
         // remove when poping animation is finished
         setTimeout(() => {
           markIndices(matchedIndices, setPopping, false);
-        }, 300); // pop animation
-      }, 700); // flip animation
+          if (isPaired + 1 === PickCards.length / 2) {
+            setTimeout(() => {
+              onComplete(elapsed);
+            }, 600);
+          }
+        }, 200); // pop animation
+      }, 600); // flip animation
       return;
     }
     setTimeout(() => {
       markIndices(matchedIndices, setFlipped, false);
-      // setFlipped((prev) => {
-      //   const copy_prev = [...prev];
-      //   copy_prev[first] = false;
-      //   copy_prev[second] = false;
-      //   return copy_prev;
-      // });
-    }, 700);
+    }, 600);
   };
 
   //timer
@@ -137,9 +136,6 @@ const GamePage = ({ level, onClick, onComplete }) => {
   useEffect(() => {
     if (level === isPaired) {
       cancelAnimationFrame(frameRef.current);
-      setTimeout(() => {
-        onComplete(elapsed);
-      }, 200);
       return;
     }
     startTimeRef.current = performance.now(); // start time(ms)

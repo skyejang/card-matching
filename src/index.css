@@ -21,7 +21,7 @@
 }
 .card-wrap {
   @apply w-[100px] h-[100px] relative;
-  transition: all 0.7s ease;
+  transition: all 0.6s ease;
   perspective-origin: center;
   transform-style: preserve-3d;
   will-change: transform;
@@ -60,7 +60,7 @@
 }
 
 .card-group.pop {
-  animation: pop 0.3s ease-in-out;
+  animation: pop 0.2s ease-in-out;
 }
 .card {
   @apply w-full h-full border-2 border-darkbrown rounded-md flex items-center justify-center absolute top-0 left-0;
