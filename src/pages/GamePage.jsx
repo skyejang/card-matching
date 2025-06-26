@@ -146,8 +146,8 @@ const GamePage = ({ level, onClick, onComplete }) => {
         </div>
       )}
       <div className="pt-4 ">
-        <div className="w-full flex justify-between mt-12 max-[501px]:mt-6">
-          <div className="flex max-[500px]:px-6">
+        <div className="w-full flex justify-between mt-12 max-[501px]:mt-6 max-[500px]:px-6">
+          <div className="flex">
             <p className="text-lg text-darkbrown font-roboto font-medium mr-4">
               Matched Pairs
             </p>
