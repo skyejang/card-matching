@@ -72,8 +72,17 @@ const GamePage = ({ level, onClick, onComplete }) => {
 
   const [flipped, setFlipped] = useState(Array(PickCards.length).fill(false));
   const [paired, setPaired] = useState(Array(PickCards.length).fill(false));
+  const [popping, setPopping] = useState(Array(PickCards.length).fill(false));
   const [firstIdx, setFirstIdx] = useState(null);
   const [isPaired, setIsPaired] = useState(0);
+  const markIndices = (incides, setter, value = true) => {
+    setter((prev) => {
+      const copy = [...prev];
+      incides.forEach((ele) => (copy[ele] = value));
+      return copy;
+    });
+    return;
+  };
   const flipHandler = (index) => {
     //Ignore if it's already flipped or paired
     if (flipped[index] || paired[index]) return;
@@ -92,26 +101,32 @@ const GamePage = ({ level, onClick, onComplete }) => {
     //the second choice card
     const first = firstIdx; //snapshot
     const second = index;
+
+    const matchedIndices = [first, second];
     setFirstIdx(null); //Initialize for next turn
     if (PickCards[first] === PickCards[second]) {
       // matching success
       setIsPaired((prev) => prev + 1);
-      setPaired((prev) => {
-        const copy_prev = [...prev];
-        copy_prev[first] = true;
-        copy_prev[second] = true;
-        return copy_prev;
-      });
+      markIndices(matchedIndices, setPaired);
+      setTimeout(() => {
+        markIndices(matchedIndices, setPopping);
+
+        // remove when poping animation is finished
+        setTimeout(() => {
+          markIndices(matchedIndices, setPopping, false);
+        }, 300); // pop animation
+      }, 700); // flip animation
       return;
     }
     setTimeout(() => {
-      setFlipped((prev) => {
-        const copy_prev = [...prev];
-        copy_prev[first] = false;
-        copy_prev[second] = false;
-        return copy_prev;
-      });
-    }, 300);
+      markIndices(matchedIndices, setFlipped, false);
+      // setFlipped((prev) => {
+      //   const copy_prev = [...prev];
+      //   copy_prev[first] = false;
+      //   copy_prev[second] = false;
+      //   return copy_prev;
+      // });
+    }, 700);
   };
 
   //timer
@@ -174,6 +189,7 @@ const GamePage = ({ level, onClick, onComplete }) => {
               card={card}
               cardSet={cardSet}
               isFlipped={flipped[i] || paired[i]}
+              popping={popping[i]}
               onClick={() => flipHandler(i)}
             />
           ))}

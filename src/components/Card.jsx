@@ -1,5 +1,5 @@
 import React from "react";
-const Card = ({ cardSet, card, onClick, isFlipped }) => {
+const Card = ({ cardSet, card, onClick, isFlipped, popping }) => {
   const findColor = (obj, val) => {
     return Object.keys(obj).find((key) => obj[key].includes(val));
   };
@@ -24,10 +24,12 @@ const Card = ({ cardSet, card, onClick, isFlipped }) => {
   };
   const emoji = (card) => emojiMap[card] || "";
   return (
-    <div className={`card-wrap ${isFlipped ? "flip" : ""}`} onClick={onClick}>
-      <div className="card front"></div>
-      <div className={`card back ${colorMap[findColor(cardSet, card)]}`}>
-        <p className="text-4xl">{emoji(card)}</p>
+    <div className={`card-group ${popping ? "pop" : ""}`}>
+      <div className={`card-wrap ${isFlipped ? "flip" : ""}`} onClick={onClick}>
+        <div className="card front"></div>
+        <div className={`card back ${colorMap[findColor(cardSet, card)]}`}>
+          <p className="text-4xl">{emoji(card)}</p>
+        </div>
       </div>
     </div>
   );
