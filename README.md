@@ -1,45 +1,49 @@
-🃏 Korean-Inspired Card Matching Game
-(React + Tailwind CSS + Vite + Firebase + Vercel)
+# 🃏 Korean-Inspired Card Matching Game
 
-📌 Overview
-This is a card matching game inspired by the traditional colors and nature motifs of Korea, such as flowers and trees.
-Players can choose from Easy, Normal, or Hard modes before starting the game.
+_(React + Tailwind CSS + Vite + Firebase + Vercel)_
 
-🪷 In Easy and Normal modes, users can progress to the next stage after completing the current level.
-🌿 Though simple in gameplay, the design uniquely reflects traditional Korean aesthetics.
+## 📌 Overview
 
-⏱️ After completing a game, players can check their rankings based on level and clear time through a live leaderboard system.
+This is a **card matching game** inspired by the **traditional colors and nature motifs of Korea**, such as flowers and trees.  
+Players can choose from **Easy**, **Normal**, or **Hard** modes before starting the game.
 
-✨ Features
-🎮 Difficulty Selection
-Choose from Easy, Normal, and Hard modes.
+🪷 In **Easy** and **Normal** modes, users can progress to the next stage after completing the current level.  
+🌿 Though simple in gameplay, the design uniquely reflects **traditional Korean aesthetics**.
 
-➡️ Stage Progression
-Clear Easy or Normal levels to unlock the next stage.
+⏱️ After completing a game, players can check their **rankings** based on level and clear time through a live leaderboard system.
 
-🏆 Leaderboard
-See your ranking by level and clear time. Challenge yourself for the best time!
+---
 
-🎨 Traditional Korean Visuals
+## ✨ Features
 
-Inspired by Dancheong (단청) color palette
+- 🎮 **Difficulty Selection**  
+  Choose from **Easy**, **Normal**, and **Hard** modes.
 
-Card designs incorporate Plum Blossom, Orchid, Chrysanthemum, and Bamboo (the “Four Gracious Plants” or 사군자)
+- ➡️ **Stage Progression**  
+  Clear **Easy** or **Normal** levels to unlock the next stage.
 
-📱 Responsive Design
-Play seamlessly on both desktop and mobile devices.
+- 🏆 **Leaderboard**  
+  Check your **ranking by level and clear time**. Compete for the best score!
 
-🔥 Firebase Integration
-All game data and rankings are saved and loaded in real-time with Firebase Firestore.
+- 🎨 **Traditional Korean Visuals**
 
-⚡ Fast Build & Deployment
-Built with Vite, deployed with Vercel for blazing-fast performance.
+  - Inspired by **Dancheong (단청)** color palette
+  - Cards reflect the **Four Gracious Plants (사군자)**: Plum Blossom, Orchid, Chrysanthemum, Bamboo
 
-🛠 Tech Stack
-Frontend: React, Tailwind CSS
+- 📱 **Responsive Design**  
+  Works beautifully on both desktop and mobile devices.
 
-Build Tool: Vite
+- 🔥 **Firebase Integration**  
+  Real-time data saving and retrieval for user records and rankings.
 
-Database: Firebase Firestore
+- ⚡ **Fast Build & Deployment**  
+  Developed using **Vite**, deployed through **Vercel** for optimal performance.
 
-Deployment: Vercel
+---
+
+## 🛠 Tech Stack
+
+- **Frontend**: React, Tailwind CSS
+- **Build Tool**: Vite
+- **Database**: Firebase Firestore
+- **Deployment**: Vercel
