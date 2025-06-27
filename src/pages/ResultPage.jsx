@@ -6,7 +6,10 @@ const ResultPage = ({ playerName, playerTime, onBackToStart }) => {
   const getRankings = () => {
     const data = JSON.parse(localStorage.getItem("rankings") || "[]");
     return data
-      .sort((a, b) => a.time - b.time)
+      .sort((a, b) => {
+        if (b.level !== a.level) return b.level - a.level; // 높은 레벨 먼저
+        return a.time - b.time; // 같은 레벨이면 시간 빠른 순
+      })
       .map((item, index) => ({ ...item, rank: index + 1 }));
   };
   const rankings = getRankings();
@@ -18,6 +21,7 @@ const ResultPage = ({ playerName, playerTime, onBackToStart }) => {
     localStorage.clear();
     console.log(getRankings());
     alert("All Clear!");
+    onBackToStart();
   };
   return (
     <div className="pt-4 max-[431px]:pt-8 max-[431px]:px-4">
@@ -33,13 +37,16 @@ const ResultPage = ({ playerName, playerTime, onBackToStart }) => {
         <div className="w-full h-fit bg-white rounded-lg border-2 border-darkbrown p-4">
           {/* title */}
           <div className="w-full flex">
-            <p className="font-roboto text-darkbrown text-lg text-center flex-1/4">
+            <p className="font-roboto text-darkbrown text-lg text-center flex-1/6">
               Rank
+            </p>
+            <p className="font-roboto text-darkbrown text-lg text-center flex-1/4">
+              Level
             </p>
             <p className="font-roboto text-darkbrown text-lg text-center flex-1/2">
               Name
             </p>
-            <p className="font-roboto text-darkbrown text-lg text-center flex-1/4">
+            <p className="font-roboto text-darkbrown text-lg text-center flex-1/6">
               Time
             </p>
           </div>
@@ -47,10 +54,11 @@ const ResultPage = ({ playerName, playerTime, onBackToStart }) => {
           <AnimatePresence>
             {rankings.slice(0, 5).map((ranking, i) => (
               <ResultRow
-                key={`${ranking.name}-${ranking.time}`}
+                key={`${ranking.name}-${i}`}
                 rank={i + 1}
                 name={ranking.name}
                 time={ranking.time}
+                level={ranking.level}
                 highlight={
                   currentPlayer.name === ranking.name &&
                   currentPlayer.time === ranking.time

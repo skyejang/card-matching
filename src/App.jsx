@@ -10,13 +10,13 @@ import ResultPage from "./pages/ResultPage";
 
 function App() {
   const [page, setPage] = useState("intro");
-  const [level, setLevel] = useState("easy");
+  const [level, setLevel] = useState(6);
   const [name, setName] = useState("");
   const [elapsed, setElapsed] = useState(0);
   //save game result at localstorage
-  const saveResult = (name, time) => {
+  const saveResult = (name, time, level) => {
     const oldData = JSON.parse(localStorage.getItem("rankings") || "[]");
-    const newData = [...oldData, { name, time }];
+    const newData = [...oldData, { name, time, level }];
     localStorage.setItem("rankings", JSON.stringify(newData));
   };
 
@@ -35,11 +35,13 @@ function App() {
         )}
         {page === "game" && (
           <GamePage
-            level={level === "easy" ? 6 : level === "normal" ? 8 : 10}
-            onClick={() => setPage("level")}
+            key={level}
+            level={level}
+            onReStart={() => setPage("intro")}
+            onNextLevel={() => setLevel((prev) => prev + 2)}
             onComplete={(time) => {
               setElapsed(time);
-              saveResult(name, time);
+              saveResult(name, time, level);
               setPage("result");
             }}
           />
@@ -48,6 +50,7 @@ function App() {
           <ResultPage
             playerName={name}
             playerTime={elapsed}
+            playerLevel={level}
             onBackToStart={() => setPage("intro")}
           />
         )}

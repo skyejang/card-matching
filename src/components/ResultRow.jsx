@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const ResultRow = ({ rank, name, time, highlight }) => {
+const ResultRow = ({ rank, name, level, time, highlight }) => {
   return (
     <motion.div
       layout // animation for location moving
@@ -12,13 +12,16 @@ const ResultRow = ({ rank, name, time, highlight }) => {
       })}
       className={`w-full py-2 flex ${highlight ? "bg-yellow-100" : ""}`}
     >
-      <p className="font-roboto text-darkbrown text-center text-sm flex-1/4">
+      <p className="font-roboto text-darkbrown text-center text-sm flex-1/6">
         {rank}
+      </p>
+      <p className="font-roboto text-darkbrown text-center text-sm flex-1/4">
+        {level === 6 ? "Easy" : level === 8 ? "Normal" : "Hard"}
       </p>
       <p className="font-roboto text-darkbrown text-center text-sm flex-1/2 truncate whitespace-nowrap overflow-hidden">
         {name}
       </p>
-      <p className="font-roboto text-darkbrown text-center text-sm flex-1/4">
+      <p className="font-roboto text-darkbrown text-center text-sm flex-1/6">
         {time}
       </p>
     </motion.div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DemoPlay from "../components/DemoPlay";
 const LevelPage = ({ onSubmit }) => {
-  const [level, setLevel] = useState("easy");
+  const [level, setLevel] = useState(6);
   const [name, setName] = useState("");
   const [warning, setWaring] = useState(false);
 
@@ -33,27 +33,27 @@ const LevelPage = ({ onSubmit }) => {
           <div className="w-full mt-4 flex justify-around">
             <button
               type="button"
-              onClick={() => setLevel("easy")}
+              onClick={() => setLevel(6)}
               className={`font-bungee max-[431px]:text-3xl text-4xl text-shadow cursor-pointer ${
-                level === "easy" ? "text-orange" : "text-gray"
+                level === 6 ? "text-orange" : "text-gray"
               }`}
             >
               EASY
             </button>
             <button
               type="button"
-              onClick={() => setLevel("normal")}
+              onClick={() => setLevel(8)}
               className={`font-bungee max-[431px]:text-3xl text-4xl text-shadow cursor-pointer ${
-                level === "normal" ? "text-orange" : "text-gray"
+                level === 8 ? "text-orange" : "text-gray"
               }`}
             >
               NORMAL
             </button>
             <button
               type="button"
-              onClick={() => setLevel("hard")}
+              onClick={() => setLevel(10)}
               className={`font-bungee max-[431px]:text-3xl text-4xl text-shadow cursor-pointer ${
-                level === "hard" ? "text-orange" : "text-gray"
+                level === 10 ? "text-orange" : "text-gray"
               }`}
             >
               HARD

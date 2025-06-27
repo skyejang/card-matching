@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Card from "../components/Card";
 
-const GamePage = ({ level, onClick, onComplete }) => {
+const GamePage = ({ level, onReStart, onNextLevel, onComplete }) => {
   //Pre-specified : dynamic class creation is not possible in tailwind
   const colClass =
     level === 6
@@ -14,7 +14,6 @@ const GamePage = ({ level, onClick, onComplete }) => {
     pink: ["cherryblossom", "hibiscus", "tulip", "rose"],
     green: ["clover", "bamboo", "leaves", "palm"],
   };
-
   //Draw a Card & Make a Pair
   const color = Object.keys(cardSet);
   const PickCards = useMemo(() => {
@@ -70,11 +69,40 @@ const GamePage = ({ level, onClick, onComplete }) => {
     return picked.sort(() => Math.random() - 0.5);
   }, [level]);
 
-  const [flipped, setFlipped] = useState(Array(PickCards.length).fill(false));
+  const [flipped, setFlipped] = useState(Array(PickCards.length).fill(true));
   const [paired, setPaired] = useState(Array(PickCards.length).fill(false));
   const [popping, setPopping] = useState(Array(PickCards.length).fill(false));
   const [firstIdx, setFirstIdx] = useState(null);
   const [isPaired, setIsPaired] = useState(0);
+  const [canClick, setCanClick] = useState(false); // prevent click event conflict
+  const isPairedRef = useRef(0);
+  // isPaired 상태랑 ref 같이 업데이트하는 함수
+  const updateIsPaired = (newCount) => {
+    setIsPaired(newCount);
+    isPairedRef.current = newCount;
+  };
+  // 레벨 변경 시 카드 상태 초기화
+  useEffect(() => {
+    setFlipped(Array(PickCards.length).fill(true));
+    setPaired(Array(PickCards.length).fill(false));
+    setPopping(Array(PickCards.length).fill(false));
+    setIsPaired(0);
+    setFirstIdx(null);
+    setCanClick(false);
+  }, [PickCards]);
+
+  useEffect(() => {
+    if (PickCards.length === 0) return;
+
+    setCanClick(false); // 초기엔 클릭 비활성화
+    const timeout = setTimeout(() => {
+      setFlipped(Array(PickCards.length).fill(false));
+      setCanClick(true); // 0.3초 후 클릭 가능
+    }, 1500);
+
+    return () => clearTimeout(timeout);
+  }, [PickCards]); // start when pickcards is ready
+
   const markIndices = (incides, setter, value = true) => {
     setter((prev) => {
       const copy = [...prev];
@@ -85,7 +113,7 @@ const GamePage = ({ level, onClick, onComplete }) => {
   };
   const flipHandler = (index) => {
     //Ignore if it's already flipped or paired
-    if (flipped[index] || paired[index]) return;
+    if (!canClick || flipped[index] || paired[index]) return;
     //When changing the useState state,
     //get the previous value as a prev factor when getting the latest prev
     setFlipped((prev) => {
@@ -104,27 +132,32 @@ const GamePage = ({ level, onClick, onComplete }) => {
 
     const matchedIndices = [first, second];
     setFirstIdx(null); //Initialize for next turn
+    setCanClick(false);
     if (PickCards[first] === PickCards[second]) {
       // matching success
-      setIsPaired((prev) => prev + 1);
+      const newPairedCount = isPairedRef.current + 1;
+      updateIsPaired(newPairedCount);
       markIndices(matchedIndices, setPaired);
       setTimeout(() => {
         markIndices(matchedIndices, setPopping);
-
+        setCanClick(true);
         // remove when poping animation is finished
         setTimeout(() => {
           markIndices(matchedIndices, setPopping, false);
-          if (isPaired + 1 === PickCards.length / 2) {
+          if (newPairedCount === PickCards.length / 2 && level === 10) {
             setTimeout(() => {
               onComplete(elapsed);
-            }, 600);
+            }, 1500);
+          } else {
+            setCanClick(true);
           }
-        }, 200); // pop animation
-      }, 600); // flip animation
+        }, 150); // pop animation
+      }, 500); // flip animation
       return;
     }
     setTimeout(() => {
       markIndices(matchedIndices, setFlipped, false);
+      setCanClick(true);
     }, 600);
   };
 
@@ -132,7 +165,7 @@ const GamePage = ({ level, onClick, onComplete }) => {
   const [elapsed, setElapsed] = useState(0);
   const startTimeRef = useRef(null);
   const frameRef = useRef(null);
-  //timer start
+  // timer start
   useEffect(() => {
     if (level === isPaired) {
       cancelAnimationFrame(frameRef.current);
@@ -147,13 +180,33 @@ const GamePage = ({ level, onClick, onComplete }) => {
     update();
     return () => cancelAnimationFrame(frameRef.current);
   }, [isPaired, level]);
+
   return (
     <>
       {level === isPaired && (
         <div className="w-full h-screen bg-white/50 fixed left-0 top-0 z-10 flex items-center justify-center px-4">
-          <h1 className="font-bungee text-darkbrown max-[400px]:text-4xl max-[600px]:text-5xl text-7xl text-shadow">
-            ALL MATCHED!
-          </h1>
+          <div className="p-6 bg-gray-50 border-2 border-darkbrown">
+            <h1 className="block font-bungee text-darkbrown max-[400px]:text-3xl max-[600px]:text-4xl text-6xl text-shadow">
+              COMPLETE!
+            </h1>
+            {level === 10 && (
+              <div className="flex justify-between mt-12">
+                <button
+                  onClick={() => onComplete(elapsed)}
+                  className="font-bungee cursor-pointer text-shadow text-orange max-[400px]:text-3xl text-4xl"
+                >
+                  STOP
+                </button>
+
+                <button
+                  onClick={() => onNextLevel(level)}
+                  className="font-bungee cursor-pointer text-shadow text-orange max-[400px]:text-3xl text-4xl"
+                >
+                  NEXT
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
       <div className="pt-4 ">
@@ -192,7 +245,7 @@ const GamePage = ({ level, onClick, onComplete }) => {
         </div>
         <div className="w-full text-center mt-16 max-[501px]:mt-8">
           <button
-            onClick={onClick}
+            onClick={onReStart}
             className="font-bungee text-shadow text-orange max-[501px]:text-4xl text-5xl cursor-pointer"
           >
             BACK
