@@ -1,12 +1,45 @@
-# React + Vite
+🃏 Korean-Inspired Card Matching Game
+(React + Tailwind CSS + Vite + Firebase + Vercel)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+📌 Overview
+This is a card matching game inspired by the traditional colors and nature motifs of Korea, such as flowers and trees.
+Players can choose from Easy, Normal, or Hard modes before starting the game.
 
-Currently, two official plugins are available:
+🪷 In Easy and Normal modes, users can progress to the next stage after completing the current level.
+🌿 Though simple in gameplay, the design uniquely reflects traditional Korean aesthetics.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+⏱️ After completing a game, players can check their rankings based on level and clear time through a live leaderboard system.
 
-## Expanding the ESLint configuration
+✨ Features
+🎮 Difficulty Selection
+Choose from Easy, Normal, and Hard modes.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+➡️ Stage Progression
+Clear Easy or Normal levels to unlock the next stage.
+
+🏆 Leaderboard
+See your ranking by level and clear time. Challenge yourself for the best time!
+
+🎨 Traditional Korean Visuals
+
+Inspired by Dancheong (단청) color palette
+
+Card designs incorporate Plum Blossom, Orchid, Chrysanthemum, and Bamboo (the “Four Gracious Plants” or 사군자)
+
+📱 Responsive Design
+Play seamlessly on both desktop and mobile devices.
+
+🔥 Firebase Integration
+All game data and rankings are saved and loaded in real-time with Firebase Firestore.
+
+⚡ Fast Build & Deployment
+Built with Vite, deployed with Vercel for blazing-fast performance.
+
+🛠 Tech Stack
+Frontend: React, Tailwind CSS
+
+Build Tool: Vite
+
+Database: Firebase Firestore
+
+Deployment: Vercel
