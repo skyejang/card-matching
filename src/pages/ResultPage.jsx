@@ -117,7 +117,8 @@ const ResultPage = ({ playerName, playerTime, onBackToStart }) => {
           REPLAY
         </button>
       </div>
-      <div className="w-full text-center mt-4">
+      {/* For admin */}
+      {/* <div className="w-full text-center mt-4">
         <button
           type="button"
           onClick={resetRankings}
@@ -125,7 +126,7 @@ const ResultPage = ({ playerName, playerTime, onBackToStart }) => {
         >
           RESET ALL
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
