@@ -189,7 +189,7 @@ const GamePage = ({ level, onReStart, onNextLevel, onComplete }) => {
             <h1 className="block font-bungee text-darkbrown max-[400px]:text-3xl max-[600px]:text-4xl text-6xl text-shadow">
               COMPLETE!
             </h1>
-            {level === 10 && (
+            {level !== 10 && (
               <div className="flex justify-between mt-12">
                 <button
                   onClick={() => onComplete(elapsed)}

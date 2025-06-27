@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "./firebase";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -14,12 +16,25 @@ function App() {
   const [name, setName] = useState("");
   const [elapsed, setElapsed] = useState(0);
   //save game result at localstorage
-  const saveResult = (name, time, level) => {
-    const oldData = JSON.parse(localStorage.getItem("rankings") || "[]");
-    const newData = [...oldData, { name, time, level }];
-    localStorage.setItem("rankings", JSON.stringify(newData));
+  // const saveResult = (name, time, level) => {
+  //   const oldData = JSON.parse(localStorage.getItem("rankings") || "[]");
+  //   const newData = [...oldData, { name, time, level }];
+  //   localStorage.setItem("rankings", JSON.stringify(newData));
+  // };
+  //save game result at firebase
+  const saveResult = async (name, time, level) => {
+    try {
+      await addDoc(collection(db, "rankings"), {
+        name,
+        time,
+        level,
+        date: new Date(),
+      });
+      console.log("Result saved to Firestore");
+    } catch (error) {
+      console.error("Error saving result: ", error);
+    }
   };
-
   return (
     <div className="bg-ivory w-full h-screen">
       <div className="max-[431px]:w-full w-md md:w-3xl h-screen m-auto">
